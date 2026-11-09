@@ -1,0 +1,960 @@
+<html>
+	<head>
+		<title>Halfred</title>
+		<link rel='stylesheet' href='styles.css'>
+	</head>
+	<body>
+		<h2>Halfred</h2>
+		<p>Halfred is a console crossword game like Scrabble, but played against a perfect bot.</p>
+		<h3>Demo</h3>
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/sYSwkaLp4jM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		<h3>Word lists</h3>
+		<p>A few different lists of valid words are provided depending on how restrictive you want the validity criteria to be.</p>
+		<h4>General requirements</h4>
+		<p>All word lists require words to have an English definition on the <a href='https://en.wiktionary.org/wiki/Wiktionary:Main_Page'>English Wiktionary</a>, and they exclude all of the following:</p>
+		<ol>
+			<li><p>Terms spelled with spaces (like <a href='https://en.wiktionary.org/wiki/per_se' class='mention'>per se</a>), hyphens, or other non-letter characters.</p></li>
+			<li><p>Misspellings.</p></li>
+			<li><p>Non-standard words (like <a href='https://en.wiktionary.org/wiki/anywhen#English' class='mention'>anywhen</a>).</p></li>
+			<li><p>Codes (like <a href='https://en.wiktionary.org/wiki/HWH#English' class='mention'>HWH</a>).</p></li>
+			<li><p>Obsolete words (like <a href='https://en.wiktionary.org/wiki/beetlehead#English' class='mention'>beetlehead</a>).</p></li>
+			<li><p>Derogatory, offensive, perjorative, and vulgar words. (As with all the other restrictions, identifying these words depends on them being properly marked by Wiktionary editors, so I can't guarantee that no bad words have slipped through.)</p></li>
+			<li><p>Acronyms (like <span class='mention'>NASA</span>), initialisms (like <span class='mention'>BBC</span>) and <a href='https://en.wiktionary.org/wiki/Category:English_pseudo-acronyms'>pseudo-acronyms</a> (like <a href='https://en.wiktionary.org/wiki/GNOME#English' class='mention'>GNOME</a>). Not all initialisms are properly marked as such on Wiktionary, so if a word consists of entirely uppercase letters, optionally followed by "s" or "es" (making it plural), it's not a valid word.</p></li>
+			<li><p>Elongations (like <span class='mention'>hmmmm</span>).</p></li>
+		</ol>
+
+		<h4>Main</h4>
+		<p> In addition to the general requirements, the main word list excludes:</p>
+		<ol>
+			<li><p>Abbreviations (like <a href='https://en.wiktionary.org/wiki/assn#English' class='mention'>assn</a>).</li></p>
+		</ol>
+
+		<h4>Restricted</h4>
+		<p>In addition to the general requirements, the restricted list also excludes:<p>
+		<ol>
+			<li><p>Abbreviations (like <a href='https://en.wiktionary.org/wiki/assn#English' class='mention'>assn</a>).</li></p>
+			<li><p>Archaic words (like <a href='https://en.wiktionary.org/wiki/disinhume#English' class='mention'>disinhume</a>).</p></li>
+			<li><p>Sexual words. (See the disclaimer above on derogatory words.)</p></li>
+			<li><p>Words that, in the real world, occur at a frequency of less than 1 in 100 million according to the Python <a href='https://pypi.org/project/wordfreq/'>wordfreq</a> library.</p></li>
+		</ol>
+
+		<h4>Two-letter words</h4>
+		<p>Two-letter words play a big role in Halfred because they allow you to play alongside an existing word, not just through it. But I found that many of the two-letter "words" in the generated word lists didn't feel like real words. So I've manually curated a list of two-letter words that are incorporated into all lists of valid words. In order to be included, a word had to meet all the general requirements above, it had to have at least one lowercase letter (to filter out the many <a href='https://en.wiktionary.org/wiki/initialism#English'>initialisms</a>), and it had to have at least one sense definition on <a href='https://en.wiktionary.org/wiki/Wiktionary:Main_Page'>Wiktionary</a> that met all of the following criteria:</p>
+		<ol>
+			<li><p>Wiktionary had at least one quotation for the definition. This means that for every valid two-letter word, if you visit its linked Wiktionary page, you can see at least one example of it being used in a real, third-party book, periodical, website, etc.</p></li>
+			<li><p>The definition was not etymologicially an initialism. In other words, it did not come from taking the first letter of each word in a phrase, or the first letter of each part of a longer word. (In the specific case of <span class='mention'>ok</span> its origin is disputed, and I chose to include it because of its ubiquity.)</p></li>
+			<li><p>The definition carried some meaning. (Some sounds like <a href='https://en.wiktionary.org/wiki/di#English' class='mention'>di</a> are used as meaningless syllables to indicate a rhythm. I considered filler words like <span class='mention'>um</span> to have meaning, as they let the hearer know the speaker is thinking.)</p></li>
+			<li><p>The definition was not just a verb meaning to say the word itself, or a noun meaning an instance of the word itself.</p></li>
+			<li>
+				<p>The definition was not any of the following parts of speech:</p>
+				<ul>
+					<li>proper noun</li>
+					<li>prefix</li>
+					<li>suffix</li>
+				</ul>
+			</li>
+			<li><p>The definition was not a <a href='https://en.wiktionary.org/wiki/pronunciation_spelling#English'>pronunciation spelling</a> or an <a href='https://en.wiktionary.org/wiki/eye_dialect#English'>eye dialect</a> spelling.</p></li>
+			<li><p>If the definition was an abbreviation, then it had a pronunciation different than the full form and also different than just reading its letters individually.</p></li>
+			<li><p>If the definition was only or chiefly used in certain regions or dialects, these regions or dialects represented at least 100 million people.</p></li>
+			<li><p>The definition was not the name of an English letter (or the plural of such a name).</p></li>
+		</ol>
+		<p>This gives the following 97 two-letter words. For comparison, the official Scrabble dictionary for the United States and Canada has 107 two-letter words.</p>
+
+		<table class='table table-dark'>
+			<tr>
+				<th>Word</th>
+				<th>Definitions</th>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/aa#English' class='valid-word'>aa</a><p></td>
+				<td>
+					<ol>
+						<li><p>A form of lava flow associated with Hawaiian-type volcanoes, consisting of basaltic rock, usually dark-colored with a jagged and loose, clinkery surface.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ab#English' class='valid-word'>ab</a></p></td>
+				<td>
+					<ol>
+						<li><p>Clipping of <span class='mention'>abdominal muscle</span>.</p></li>
+						<li><p>(<span class='label'>climbing</span>) Clipping of <span class='mention'>abseil</span>.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ad#English' class='valid-word'>ad</a></p></td>
+				<td>
+					<ol>
+						<li><p>Clipping of <span class='mention'>advertisement</span>.</p></li>
+						<li><p>(<span class='label'>tennis</span>) Clipping of <span class='mention'>advantage</span>.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/Af#English' class='valid-word'>Af</a></p></td>
+				<td>
+					<ol>
+						<li><p>Clipping of <span class='mention'>African</span>: A native African (not white-skinned) in Rhodesia.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ag#English' class='valid-word'>ag</a></p></td>
+				<td>
+					<ol>
+						<li><p>Clipping of <span class='mention'>agriculture</span>.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ah#English' class='valid-word'>ah</a></p></td>
+				<td>
+					<ol>
+						<li><p>An expression of relief, relaxation, comfort, confusion, understanding, wonder, or awe, according to the uttered inflection.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ai#English' class='valid-word'>ai</a></p></td>
+				<td>
+					<ol>
+						<li><p>Bradypus tridactylus, a species of sloth endemic to the forests of southern Venezuela, the Guianas, and northern Brazil.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/al#English' class='valid-word'>al</a></p></td>
+				<td>
+					<ol>
+						<li><p>The Indian mulberry, Morinda citrifolia, especially as used to make dye.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/am#English' class='valid-word'>am</a></p></td>
+				<td>
+					<ol>
+						<li><p>First-person singular present indicative of <span class='mention'>be</span>.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/an#English' class='valid-word'>an</a></p></td>
+				<td>
+					<ol>
+						<li><p>Form of <span class='mention'>a</span>.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/as#English' class='valid-word'>as</a></p></td>
+				<td>
+					<ol>
+						<li><p>To such an extent or degree.</p></li>
+						<li><p>Considered to be, in relation to something else.</p></li>
+						<li><p>For example.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/at#English' class='valid-word'>at</a></p></td>
+				<td>
+					<ol>
+						<li><p>In, near, or in the general vicinity of.</p></li>
+						<li><p>Indicating time of occurrence, especially an instant of time, or a period of time relatively short in context or from the speaker's perspective.</p></li>
+						<li><p>In the direction of.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/aw#English' class='valid-word'>aw</a></p></td>
+				<td>
+					<ol>
+						<li><p>Used to express disappointment or dismay.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ax#English' class='valid-word'>ax</a></p></td>
+				<td>
+					<ol>
+						<li><p>US spelling of <span class='mention'>axe</span>: A tool for felling trees or chopping wood.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ay#English' class='valid-word'>ay</a></p></td>
+				<td>
+					<ol>
+						<li><p>Expressing anger, alarm, frustration, pain, etc.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ba#English' class='valid-word'>ba</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>Egyptian mythology</span>) A being's soul or personality, represented as a bird-headed figure, which survives after death but must be sustained with offerings of food.</p></li>
+						<li><p>A medieval football game played in parts of Scotland around Christmas and New Year.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/be#English' class='valid-word'>be</a></p></td>
+				<td>
+					<ol>
+						<li><p>Used with past participles of verbs to form the passive voice.</p></li>
+						<li><p>Used with present participles of verbs to form the continuous aspect.</p></li>
+						<li><p>Used with past participles of certain intransitive verbs to form the perfect aspect.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/bi#English' class='valid-word'>bi</a></p></td>
+				<td>
+					<ol>
+						<li><p>Clipping of <span class='mention'>bisexual</span>: A bisexual person.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/bo#English' class='valid-word'>bo</a></p></td>
+				<td>
+					<ol>
+						<li><p>An exclamation used to startle or frighten.</p></li>
+						<li><p>Fellow, chap, boy.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/br#English' class='valid-word'>br</a></p></td>
+				<td>
+					<ol>
+						<li><p>Expressing cold and shivering.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/by#English' class='valid-word'>by</a></p></td>
+				<td>
+					<ol>
+						<li><p>After a given amount of time has elapsed or a given event has occurred.</p></li>
+						<li><p>Through the action or presence of.</p></li>
+						<li><p>Involving or using the means of.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/da#English' class='valid-word'>da</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>Russianism</span>) Yes.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/de#English' class='valid-word'>de</a></p></td>
+				<td>
+					<ol>
+						<li><p>Used in the titles of French nobility: of.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/do#English' class='valid-word'>do</a></p></td>
+				<td>
+					<ol>
+						<li><p>A syntactic marker.</p></li>
+						<li><p>To perform; to execute.</p></li>
+						<li><p>To suffice.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/eh#English' class='valid-word'>eh</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>Canada, Upper Midwestern US, New Zealand, Australia, UK, Ireland, South Africa, India, Hong Kong, Singapore, Commonwealth</span>) Used as a tag question, to emphasise what goes before or to request that the listener express an opinion about what has been said.</p></li>
+						<li><p>Meh.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/el#English' class='valid-word'>el</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>US</span>) Clipping of <span class='mention'>elevated</span>: An elevated railway.</p></li>
+						<li><p>(<span class='label'>humorous</span>) The (sometimes where "the" would not occur in normal English).</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/El#English' class='valid-word'>El</a></p></td>
+				<td>
+					<ol>
+						<li><p>Clipping of <span class='mention'>elevated</span>: Any one of several specific elevated railways.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/em#English' class='valid-word'>em</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>typography</span>) A unit of measurement equal to the height of the type in use.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/en#English' class='valid-word'>en</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>typography</span>) A unit of measurement equal to half an em.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/er#English' class='valid-word'>er</a></p></td>
+				<td>
+					<ol>
+						<li><p>Said when hesitating in speech.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<!-- Want to cite
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ew#English' class='valid-word'>ew</a></p></td>
+				<td>
+					<ol>
+						<li><p></p></li>
+					</ol>
+				</td>
+			</tr>
+			-->
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ex#English' class='valid-word'>ex</a></p></td>
+				<td>
+					<ol>
+						<li><p>To extinguish the life of.</p></li>
+						<li><p>A former partner or spouse.</p></li>
+						<li><p>(<span class='label'>rail transport</span>) The place a train originated from or called at, prior to the present location.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ey#English' class='valid-word'>ey</a></p></td>
+				<td>
+					<ol>
+						<li><p>Alternative form of <span class='mention'>hey</span>.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/fa#English' class='valid-word'>fa</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>music</span>) The fourth diatonic (or sixth chromatic) note of a major scale.</p></li>
+						<li><p>Alternative spelling of <span class='mention'>for</span>.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/fu#English' class='valid-word'>fu</a></p></td>
+				<td>
+					<ol>
+						<li><p>Shortening of <span class='mention'>kung fu</span>.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/Ga#English' class='valid-word'>Ga</a></p></td>
+				<td>
+					<ol>
+						<li><p>A member of a particular ethnic group in Ghana and Togo.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/gi#English' class='valid-word'>gi</a></p></td>
+				<td>
+					<ol>
+						<li><p>A martial arts uniform.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/go#English' class='valid-word'>go</a></p></td>
+				<td>
+					<ol>
+						<li><p>To move.</p></li>
+						<li><p>To work or function.</p></li>
+						<li><p>To start.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/Go#English' class='valid-word'>Go</a></p></td>
+				<td>
+					<ol>
+						<li><p>Alternative letter-case form of <span class='mention'>go</span>: A strategic board game.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ha#English' class='valid-word'>ha</a></p></td>
+				<td>
+					<ol>
+						<li><p>A representation of laughter.</p></li>
+						<li><p>Said when making a vigorous attack.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/he#English' class='valid-word'>he</a></p></td>
+				<td>
+					<ol>
+						<li><p>A male person or animal, already known or implied.</p></li>
+						<li><p>They.</p></li>
+						<li><p>A genderless object regarded as masculine.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/hi#English' class='valid-word'>hi</a></p></td>
+				<td>
+					<ol>
+						<li><p>A friendly, informal, casual greeting said upon someone's arrival.</p></li>
+						<li><p>An exclamation to call attention.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/hn#English' class='valid-word'>hn</a></p></td>
+				<td>
+					<ol>
+						<li><p>Used to tag a rhetorical question.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ho#English' class='valid-word'>ho</a></p></td>
+				<td>
+					<ol>
+						<li><p>Hey; a call to excite attention, or to give notice of approach.</p></li>
+						<li><p>Said accompanying a vigorous attack.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/id#English' class='valid-word'>id</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>psychoanalysis</span>) The unconscious impulsive component of the personality in the Freudian psychoanalytic model.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/if#English' class='valid-word'>if</a></p></td>
+				<td>
+					<ol>
+						<li><p>Supposing that.</p></li>
+						<li><p>Considering the fact that.</p></li>
+						<li><p>Although.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/in#English' class='valid-word'>in</a></p></td>
+				<td>
+					<ol>
+						<li><p>Used to indicate location, inclusion, or position within spatial, temporal or abstract limits.</p></li>
+						<li><p>Into.</p></li>
+						<li><p>By.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/io#English' class='valid-word'>io</a></p></td>
+				<td>
+					<ol>
+						<li><p>Automeris io, a large yellow moth.</p></li>
+						<li><p>An exclamation of joy or triumph.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/is#English' class='valid-word'>is</a></p></td>
+				<td>
+					<ol>
+						<li><p>Third-person singular simple present indicative of <span class='mention'>be</span>.</p></li>
+						<li><p>Used in phrases with existential there (also here and where) when the semantic subject is plural.</p></li>
+						<li><p>Present indicative of <span class='mention'>be</span>.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/it#English' class='valid-word'>it</a></p></td>
+				<td>
+					<ol>
+						<li><p>The third-person singular neuter personal pronoun used to refer to an inanimate object, abstract entity, or non-human living thing.</p></li>
+						<li><p>A third-person singular personal pronoun used to refer to a baby or child, especially of unknown gender.</p></li>
+						<li><p>A third-person singular pronoun used to refer to an unspecified person.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/It#English' class='valid-word'>It</a></p></td>
+				<td>
+					<ol>
+						<li><p>A biological force that inhabits living beings, according to the vitalist approach of Georg Groddeck.</p></li>
+						<li><p>The Id.</p></li>
+						<li><p>Alternative letter-case form of <span class='mention'>it</span>: Desirable quality; quality of being successful, fashionable, or in vogue.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ka#English' class='valid-word'>ka</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>Egyptian mythology</span>) The aspect of a person’s soul or being that sustains their existence, roughly the life-force, sometimes pictured as a double of the person.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ki#English' class='valid-word'>ki</a></p></td>
+				<td>
+					<ol>
+						<li><p>Ti.</p></li>
+						<li><p>Alternative form of <span class='mention'>key</span>: A kilogram.</p></li>
+						<li><p>(<span class='label'>philosophy</span>) Alternative form of <span class='mention'>chi</span>.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/la#English' class='valid-word'>la</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>music</span>) The sixth note of a major scale.</p></li>
+						<li><p>Represents the sound of music or singing.</p></li>
+						<li><p>Prefixed to the name of a woman, with ironic effect.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/lb#English' class='valid-word'>lb</a></p></td>
+				<td>
+					<ol>
+						<li><p>Abbreviation of <span class='mention'>pound</span>: Unit of weight.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/le#English' class='valid-word'>le</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>humorous</span>) The.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/li#English' class='valid-word'>li</a></p></td>
+				<td>
+					<ol>
+						<li><p>The Chinese mile, a traditional unit of distance.</p></li>
+						<li><p>The Korean mile, a traditional unit of distance.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ma#English' class='valid-word'>ma</a></p></td>
+				<td>
+					<ol>
+						<li><p>Mother.</p></li>
+						<li><p>The landlady of a theater.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/me#English' class='valid-word'>me</a></p></td>
+				<td>
+					<ol>
+						<li><p>The first-person singular, as the object.</p></li>
+						<li><p>Used as the complement of the copula (<span class='mention'>be</span>).</p></li>
+						<li><p>The self or personality of the speaker, especially their authentic self.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/mo#English' class='valid-word'>mo</a></p></td>
+				<td>
+					<ol>
+						<li><p>Clipping of <span class='mention'>moron</span>.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/Mo#English' class='valid-word'>Mo</a></p></td>
+				<td>
+					<ol>
+						<li><p>Clipping of <a href='https://en.wikipedia.org/wiki/Mo%C3%ABt_%26_Chandon' class='mention'>Moët</a>: A French wine.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/mu#English' class='valid-word'>mu</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>Zen Buddhism</span>) Neither yes nor no.</p></li>
+						<li><p>(<span class='label'>Zen Buddhism</span>) Nothingness; nonexistence; the illusory nature of reality.</p></li>
+						<li><p>A unit of surface area, equivalent to two-thirtieths of a hectare.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/my#English' class='valid-word'>my</a></p></td>
+				<td>
+					<ol>
+						<li><p>First-person singular possessive determiner.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/no#English' class='valid-word'>no</a></p></td>
+				<td>
+					<ol>
+						<li><p>Used to show disagreement, negation, denial, refusal, or prohibition.</p></li>
+						<li><p>A negating expression; an answer that shows disagreement, denial, refusal, or disapproval.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/oe#English' class='valid-word'>oe</a></p></td>
+				<td>
+					<ol>
+						<li><p>A small island.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/of#English' class='valid-word'>of</a></p></td>
+				<td>
+					<ol>
+						<li><p>Expressing distance or motion.</p></li>
+						<li><p>Expressing separation.</p></li>
+						<li><p>Expressing origin.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/oh#English' class='valid-word'>oh</a></p></td>
+				<td>
+					<ol>
+						<li><p>Exclamation for drama or emphasis.</p></li>
+						<li><p>Expression of pain.</p></li>
+						<li><p>The digit 0 (zero).</p></li>
+					<ol>
+				</td>
+			</tr>
+			<!-- Want to cite
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/oi#English' class='valid-word'>oi</a></p></td>
+				<td>
+					<ol>
+						<li><p></p></li>
+					<ol>
+				</td>
+			</tr>
+			-->
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ok#English' class='valid-word'>ok</a></p></td>
+				<td>
+					<ol>
+						<li><p>Alternative letter-case form of <span class='mention'>OK</span>: Used to indicate acknowledgement or acceptance.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/om#English' class='valid-word'>om</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>Hinduism, Buddhism</span>) A sacred, mystical syllable used in prayer and meditation.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/on#English' class='valid-word'>on</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>baseball</span>) Having reached a base as a runner and being positioned there, awaiting further action from a subsequent batter.</p></li>
+						<li><p>Menstruating.</p></li>
+						<li><p>Along; onwards.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/oo#English' class='valid-word'>oo</a></p></td>
+				<td>
+					<ol>
+						<li><p>Any of four Hawaiian birds of the genus Moho.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/op#English' class='valid-word'>op</a></p></td>
+				<td>
+					<ol>
+						<li><p>Clipping of <span class='mention'>operator</span>.</p></li>
+						<li><p>Clipping of <span class='mention'>operator</span>: To promote an IRC user to an operator.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/or#English' class='valid-word'>or</a></p></td>
+				<td>
+					<ol>
+						<li><p>Otherwise.</p></li>
+						<li><p>The gold or yellow tincture on a coat of arms.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/os#English' class='valid-word'>os</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>anatomy</span>) Bone.</p></li>
+						<li><p>(<span class='label'>anatomy, botany</span>) An opening or entrance to a passage, particularly one at either end of the cervix.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ou#English' class='valid-word'>ou</a></p></td>
+				<td>
+					<ol>
+						<li><p>Psittirostra psittacea, a probably extinct species of Hawaiian bird.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ow#English' class='valid-word'>ow</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>music</span>) Used for emotional emphasis.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ox#English' class='valid-word'>ox</a></p></td>
+				<td>
+					<ol>
+						<li><p>Any animal of the genus Bos (bovines).</p></li>
+						<li><p>Clipping of <span class='mention'>oxygen</span>.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/oy#English' class='valid-word'>oy</a></p></td>
+				<td>
+					<ol>
+						<li><p>Alternative spelling of <span class='mention'>oi</span>: Hey.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/pa#English' class='valid-word'>pa</a></p></td>
+				<td>
+					<ol>
+						<li><p>Father.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/pi#English' class='valid-word'>pi</a></p></td>
+				<td>
+					<ol>
+						<li><p>Pious.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/po#English' class='valid-word'>po</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>UK, Australia, New Zealand, dated</span>) A chamberpot.</p></li>
+						<li><p>Clipping of <span class='mention'>police</span>.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/qi#English' class='valid-word'>qi</a></p></td>
+				<td>
+					<ol>
+						<li><p>Alternative spelling of <span class='mention'>chi</span>: A life force in traditional Chinese philosophy, culture, and medicine.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/qu#English' class='valid-word'>qu</a></p></td>
+				<td>
+					<ol>
+						<li><p>An administrative subdivision in China, roughly equivalent to districts.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/re#English' class='valid-word'>re</a></p></td>
+				<td>
+					<ol>
+						<li><p>About or regarding.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/so#English' class='valid-word'>so</a></p></td>
+				<td>
+					<ol>
+						<li><p>As a result.</p></li>
+						<li><p>To the explicitly stated extent.</p></li>
+						<li><p>To the implicitly stated extent.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/su#English' class='valid-word'>su</a></p></td>
+				<td>
+					<ol>
+						<li><p>Alternative form of <span class='mention'>xu</span>: A former Vietnamese currency.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/to#English' class='valid-word'>to</a></p></td>
+				<td>
+					<ol>
+						<li><p>A particle used for marking the following verb as an infinitive.</p></li>
+						<li><p>In the direction of, so as to arrive at or reach.</p></li>
+						<li><p>Indicating a degree or level reached.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/uh#English' class='valid-word'>uh</a></p></td>
+				<td>
+					<ol>
+						<li><p>Space filler or pause during conversation.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/um#English' class='valid-word'>um</a></p></td>
+				<td>
+					<ol>
+						<li><p>Expression of hesitation, uncertainty or space filler in conversation.</p></li>
+						<li><p>(<span class='label'>US</span>) Dated spelling of <span class='mention'>mmm</span>: An expression used to show thought, reflection, or confusion.</p></li>
+						<li><p>An expression of shocked disapproval used by a child who witnesses forbidden behavior.</p></li>
+					<ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/up#English' class='valid-word'>up</a></p></td>
+				<td>
+					<ol>
+						<li><p>Indicating movement towards, or location, at a higher place or position.</p></li>
+						<li><p>Indicating movement in another direction visualised as "up".</p></li>
+						<li><p>Toward the top of.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/us#English' class='valid-word'>us</a></p></td>
+				<td>
+					<ol>
+						<li><p>Me and at least one other person.</p></li>
+						<li><p>We, used in the same circumstances where <span class='mention'>me</span> would be used instead of <span class='mention'>I</span>.</p></li>
+						<li><p>Designates the speaker(s)/writer(s) as constituting or belonging to the stated category of people (subjective case).</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ut#English' class='valid-word'>ut</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>music, dated</span>) The first note of a major scale.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/wa#English' class='valid-word'>wa</a></p></td>
+				<td>
+					<ol>
+						<li><p>Alternative form of <span class='mention'>wah</span>: A cry of fright or distress, especially of an infant or young child.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/we#English' class='valid-word'>we</a></p></td>
+				<td>
+					<ol>
+						<li><p>Two or more people including or consisting of the speaker(s)/writer(s).</p></li>
+						<li><p>The institution which the speaker/writer is acting for.</p></li>
+						<li><p>People in general.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/We#English' class='valid-word'>We</a></p></td>
+				<td>
+					<ol>
+						<li><p>Honorific alternative letter-case form of <span class='mention'>we</span>.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<!-- Want to cite
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ya#English' class='valid-word'>ya</a></p></td>
+				<td>
+					<ol>
+						<li><p></p></li>
+					</ol>
+				</td>
+			</tr>
+			-->
+			<!-- Want to cite
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/ye#English' class='valid-word'>ye</a></p></td>
+				<td>
+					<ol>
+						<li><p></p></li>
+					</ol>
+				</td>
+			</tr>
+			-->
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/yo#English' class='valid-word'>yo</a></p></td>
+				<td>
+					<ol>
+						<li><p>An interjection similar to <span class='mention'>hey</span>.</p></li>
+						<li><p>An expression of surprise or excitement.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/yu#English' class='valid-word'>yu</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>archaeology</span>) An ancient Chinese wine-bucket, often having a decorative cover.</p></li>
+					</ol>
+				</td>
+			</tr>
+			<tr>
+				<td><p><a href='https://en.wiktionary.org/wiki/za#English' class='valid-word'>za</a></p></td>
+				<td>
+					<ol>
+						<li><p>(<span class='label'>US, Canada</span>) Abbreviation of <span class='mention'>pizza</span>.</p></li>
+						<li><p>Exotic marijuana.</p></li>
+						<li><p>An expression of surprise or confusion.</p></li>
+					</ol>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
